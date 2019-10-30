@@ -5,17 +5,17 @@
 #include <iostream>
 using namespace std;
 
-class Stiva
+class Multime
 {
 private:
-	int elem;
-	Stiva *link;
-	Stiva *head;
+	int *date = nullptr;
+	int dim; //max
+	int n; //nr curent
 public:
-	Stiva();
-	~Stiva();
-	void push(int val);
-	int pop(void);
-	int top(void);
-	void print(void);
+	void adauga(int x);
+	void extrage(int x);
+	void afisare();
+	Multime();
+	Multime(int dim);
+	~Multime();
 };

@@ -1,62 +1,70 @@
 #include "header.h"
 
-Stiva::Stiva()
+Multime::Multime()
 {
-	head = 0;
+	cout << "constructor implicit";
+	dim = 10; //dim = D
+	date = new int[dim];
+	n = 0;
 }
-Stiva::~Stiva()
+
+Multime::Multime(int dim)
 {
-	if (head)
-	{
-		delete[]head;
-	}
+	this->dim = dim;
+	date = new int[this->dim];
+	n = 0;
 }
-void Stiva::push(int val)
+
+Multime::~Multime()
 {
-	if (head)
+	cout << "destructor";
+	delete[]date;
+	date = nullptr;
+}
+
+void Multime::adauga(int x)
+{
+	if (n == dim)
 	{
-		Stiva *new_head = new Stiva;
-		new_head->elem = val;
-		new_head->link = head;
-		head = new_head;
+		cout << "full";
 	}
 	else
 	{
-		Stiva *new_head = new Stiva;
-		new_head->elem = val;
-		new_head->link = 0;
-		head = new_head;
-	}
-}
-int Stiva::pop(void)
-{
-	if (head)
-	{
-		Stiva *new_head = head->link;
-		Stiva *copy_head = head;
-		head = new_head;
-		return copy_head->elem;
-		delete copy_head;
-	}
-	return 0;
-}
-int Stiva::top(void)
-{
-	if (head)
-		return head->elem;
-	return 0;
-}
-void Stiva::print(void)
-{
-	if (head)
-	{
-		Stiva *copy_head = head;
-		while (copy_head)
+		int ok = 1;
+		for (int i = 0; i < n; i++)
 		{
-			cout << "elem = " << copy_head->elem << endl;
-			copy_head = copy_head->link;
+			if (date[i] == x)
+			{
+				ok = 0;
+			}
+		}
+		if (ok)
+		{
+			date[n] = x;
+			++n;
 		}
 	}
-	else
-		cout << "Empty stack";
 }
+
+void Multime::extrage(int x)
+{
+	for (int i = 0; i < n; i++)
+	{
+		if (date[i] == x)
+		{
+			for (int j = 0; j < n -1; j++)
+				date[j] = date[j + 1];
+			n--;
+		}
+	}
+}
+
+void Multime::afisare()
+{
+	cout << "\nElementele vectorului: ";
+	for (int i = 0; i < n; i++)
+	{
+		cout << date[i] << " ";
+	}
+}
+
