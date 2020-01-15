@@ -1,26 +1,30 @@
-#include "header.h"
-
-int main()
+#include<iostream>
+#include "lista.h"
+#include "meniu.h"
+#include "operatiiSimple.h"
+using namespace std;
+int main() 
 {
-	Multime m(10);
+	Meniu *meniu = new Meniu("Meniu Principal");
+	Meniu *submeniuCalculator = new Meniu("Calculator");
+	meniu->adaugaElement(submeniuCalculator);
+	submeniuCalculator->adaugaElement(new OperatieAdunare("'+'"));
+	submeniuCalculator->adaugaElement(new OperatieScadere("'-'"));
 
-	m.adauga(4);
-	m.adauga(3);
+	meniu->adaugaElement(new Meniu("Meniu vid"));
+	meniu->adaugaElement(new Meniu("Despre program"));
 
-	m.afisare();
+	Meniu *lista = new Meniu("Lista");
+	Lista *list = new Lista(20);
+	meniu->adaugaElement(lista);
+	lista->adaugaElement(new OpAdaugaInLista("first", list));
+	lista->adaugaElement(new OpAfisareLista("sec",list));
+	lista->adaugaElement(new OpStergeDinLista("sec", list));
+	meniu->executa();
 
-	m.extrage(4);
-	m.extrage(4);
-
-	m.afisare();
-
-	m.adauga(9);
-	m.adauga(2);
-	m.adauga(2);
-
-	m.afisare();
-
-	_getch();
-
+	delete meniu;
+	cout << endl << endl
+		<< "Sfarsit." << endl;
+	system("pause");
 	return 0;
 }
