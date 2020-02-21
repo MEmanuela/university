@@ -1,44 +1,103 @@
-#include "persoana.h"
-#include "student.h"
-#include "master.h"
+#include <iostream>
+using namespace std;
 
-int main()
-{
-	PersoanaAC p1("1234567890123", "Ana", "Iasi");
-	p1.afisareProfil();
-	StudentAC s2;
-	s2.afisareProfil();
-	StudentAC s1("1234567890122", "Ion", "Vaslui", 2, 10);
-	s1.schimbareAdresa("Bucuresti");
-	s1.inscriereAnStudiu(3);
-	s1.afisareProfil();
-
-	StudentAC s4("1234567890122", "Ion", "Vaslui", 2, 7);
-	s4.afisareProfil();
-	
-	StudentAC s3("1234567890122", "Ioana", "Bacau", 2, 9);
-	afisareProfil(&s3);
-
-	StudentAC *ret;
-	ret = s4.comparN(&s1);
-
-	ret->afisareProfil();
-
-	StudentMaster m1;
-	m1.afisareProfil();
-
-	StudentMaster m2("1234567890123", "Ana", "Iasi", 1, 5, "Pointeri");
-	m2.afisareProfil();
-
-
-	StudentMaster s[3] = { { "1234567790123", "Maria", "Piatra-Neamt", 1, 7, "Vectori" },{ "1689437890123", "Matei", "Bucuresti", 1, 9, "Structuri" },{ "1234976430123", "Ana", "Iasi", 1, 5, "Pointeri" } };
-
-	StudentMaster *max = &s[0];
-	for (int i = 1; i < 3; i++)
-	{
-		max =(StudentMaster *) max->comparN(&s[i]);
-	}
-	max->afisareProfil();
-	
-	return 0;
+struct Node 
+{ 
+   int data; 
+   Node *prev; 
+   Node *next; 
+}; 
+Node* head = NULL; 
+void insert(int newdata) 
+{ 
+   Node* newnode = new Node; 
+   newnode->data  = newdata; 
+   newnode->prev = NULL; 
+   newnode->next = head;     
+   if(head !=  NULL) 
+      head->prev = newnode ;     
+   head = newnode; 
+}   
+void display() 
+{ 
+   Node* ptr;
+   ptr = head;  
+   while(ptr != NULL) { 
+      cout<< ptr->data <<" "; 
+      ptr = ptr->next; 
+  } 
+  cout << endl;
+} 
+void insertAtAnyPosition(int x,int pos)  
+{     
+   Node* temp=NULL;  
+   temp= new Node;  
+   temp->data=x;  
+   if(head==NULL)  
+   {  
+      temp->next=NULL;  
+      head=temp;  
+      temp->prev=head;   
+   }  
+   else  
+   {  
+      Node* temp2=head;  
+      Node* temp3=NULL;  
+      int i=0;  
+      for(i=0;i<pos-1;i++)  
+      {  
+         temp2=temp2->next;  
+         temp3=temp2->next;  
+      }  
+      temp->next=temp3;  
+      temp3->prev=temp->next;  
+      temp2->next=temp;  
+      temp->prev=temp2;  
+   }  
+   cout << " After Insertion at any Position  " << endl;
+   display();
+      
 }
+void insertAtEnd(int x)  
+{  
+   Node* temp=NULL;  
+   temp= new Node;  
+   temp->data=x;  
+   if(head==NULL)  
+   {  
+      temp->next=NULL;  
+      head=temp;  
+      temp->prev=head;  
+      
+   }  
+   else  
+   {  
+      Node* temp2=head;  
+      while(temp2->next!=NULL)  
+      {  
+         temp2=temp2->next;  
+      }  
+      temp2->next=temp;  
+      temp->prev=temp2->next;  
+      temp->next=NULL;  
+   }  
+}  
+int main() 
+{ 
+   insert(3);
+   insert(1);
+   insert(7);
+   insert(2);
+   insert(9);
+   cout<<"The doubly linked list is: " <<endl;
+   display(); 
+
+   insertAtAnyPosition(23,3); 
+
+   insertAtEnd(2);  
+   insertAtEnd(3);  
+   insertAtEnd(9);  
+   insertAtEnd(8); 
+   display(); 
+   return 0; 
+} 
